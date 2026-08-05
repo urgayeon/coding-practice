@@ -1,6 +1,8 @@
 #include <string>
 #include <vector>
 
+// 그리디 알고리즘 적용 : 매순간 최선의 선택을 하는 것 
+
 using namespace std;
 
 int solution(int n, int m, vector<int> section) {
