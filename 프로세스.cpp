@@ -5,30 +5,31 @@
 using namespace std;
 
 int solution(vector<int> priorities, int location) {
-    int answer = 0;
-    queue<pair<int,int>> process;
-    priority_queue<int> pq; // 자동으로 정렬 (내림차순) 
-    int count = 0;
-    
+    queue<pair<int, int>> process;
+    priority_queue<int> pq;
+    int cnt = 0;
+        
     for(int i = 0; i<priorities.size(); i++){
-        process.push({priorities[i],i}); // {우선순위, 인덱스}
+        process.push({i, priorities[i]});
         pq.push(priorities[i]);
     }
     
     while(!process.empty()){
-        pair<int, int> current = process.front();
-        int top_p = pq.top();
+        pair<int, int> standard = process.front();
+        int top_pq = pq.top();
         
-        if(current.first < top_p){
+        if(standard.second < top_pq){
             process.pop();
-            process.push(current);
-        }
+            process.push(standard);
+        } 
+        // 같다면 
         else{
-            count++;
-            if(current.second == location) answer = count;
+            cnt++;
+            if(standard.first == location){
+                return cnt;
+            }
             process.pop();
             pq.pop();
         }
     }
-    return answer;
 }
