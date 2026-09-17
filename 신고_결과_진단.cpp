@@ -22,7 +22,7 @@ vector<int> solution(vector<string> id_list, vector<string> report, int k) {
         ss >> user >> sin_go;
         
             
-        // 신고한 사람들만 딱 들어가도록 ( 중복 안 되도록 )
+        // map 자료구조에서 value 가 존재하는지 find() 로 확인 
         if (find(singo_map[user].begin(), singo_map[user].end(), 
             sin_go) == singo_map[user].end()) {
             singo_map[user].push_back(sin_go);
