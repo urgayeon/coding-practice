@@ -1,0 +1,40 @@
+name: C++ Compile Check
+
+on:
+  push:
+    paths:
+      - "programmers/**/*.cpp"
+      - ".github/workflows/cpp-check.yml"
+  pull_request:
+    paths:
+      - "programmers/**/*.cpp"
+      - ".github/workflows/cpp-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Check C++ solutions
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          found=false
+
+          while IFS= read -r -d '' file; do
+            found=true
+            echo "Checking: $file"
+            g++ -std=c++17 -fsyntax-only "$file"
+          done < <(find programmers -type f -name '*.cpp' -print0 | sort -z)
+
+          if [[ "$found" == "false" ]]; then
+            echo "No C++ solution files found."
+            exit 1
+          fi
