@@ -5,29 +5,39 @@
 using namespace std;
 
 int solution(int bridge_length, int weight, vector<int> truck_weights) {
+    int answer = 0;
     queue<int> bridge;
-    int current_weight = 0;
-    int time = 0;
+    queue<int> waiting;
     
-    // length 만큼 칸 만들어주기 
-    for(int i = 0; i < bridge_length; i++){
+    for(int t: truck_weights){
+        waiting.push(t);
+    }
+    
+    for (int i = 0; i < bridge_length; i++) {
         bridge.push(0);
     }
     
-    int truck = 0;
+    int sum = 0;
+    int remaining = truck_weights.size();
     
-    while(truck < truck_weights.size()){
-        time++;
-        
-        current_weight -= bridge.front();
-        bridge.pop();
-        
-        if(current_weight + truck_weights[truck] <= weight){
-            bridge.push(truck_weights[truck]);
-            current_weight += truck_weights[truck];
-            truck++;
+     while (remaining > 0) {
+        answer++;
+         
+         if(bridge.front() != 0) {
+             sum -= bridge.front();
+             remaining--;
+         }   
+         
+         bridge.pop();
+
+        if (!waiting.empty() && (sum + waiting.front() <= weight)) {
+            bridge.push(waiting.front());
+            sum += waiting.front();
+            waiting.pop();
+        } else {
+            bridge.push(0);
         }
-        else bridge.push(0); // 칸 수를 계속 유지해야하니까 값 자체는 있어야 함 
-    } 
-    return time + bridge_length;
+    }
+
+    return answer;
 }
