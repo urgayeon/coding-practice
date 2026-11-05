@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// BFS : 거리 비용이 같은 경우 처음 도착했을 때가 최적해임을 보장 
 
 int solution(vector<vector<int> > maps)
 {
