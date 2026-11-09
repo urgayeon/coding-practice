@@ -11,7 +11,7 @@ int solution(vector<vector<int> > maps)
     int n = maps.size(); // 세로
     int m = maps[0].size(); // 가로
     
-    vector<vector<int>> distance(n, vector<int>(m, 0)); // 해당 칸 까지 가는데에 필요한 최소 칸 수
+    vector<vector<int>> distance(n, vector<int>(m, 0)); // m칸을 0개로 채우고, 그것을 n개의 줄 
     queue<pair<int, int>> q;
     
     q.push({0, 0});
